@@ -110,7 +110,17 @@ class _MainPageState extends State<MainPage> {
                             ? Defaults.drawerItemSelectedColor
                             : Defaults.drawerItemColor,
                       ),
-                      title: Text(Defaults.drawerItemText[0]),
+                      title: Text(
+                        Defaults.drawerItemText[0]
+                        style: GoogleFonts.sanchez(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        color: indexClicked == 0
+                            ? Defaults.drawerItemSelectedColor
+                            : Defaults.drawerItemColor,
+                        ),
+                      ),
+                      ),
                       onTap: () {
                         setState(() {
                           indexClicked = 0;
@@ -125,7 +135,16 @@ class _MainPageState extends State<MainPage> {
                             ? Defaults.drawerItemSelectedColor
                             : Defaults.drawerItemColor,
                       ),
-                      title: Text(Defaults.drawerItemText[1]),
+                      title: Text(
+                        Defaults.drawerItemText[1],
+                        style: GoogleFonts.sanchez(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        color: indexClicked == 1
+                            ? Defaults.drawerItemSelectedColor
+                            : Defaults.drawerItemColor,
+                        ),
+                      ),
                       onTap: () {
                         setState(() {
                           indexClicked = 1;
