@@ -21,6 +21,5 @@ class Defaults {
     Icons.access_time_sharp,
     Icons.delete,
     Icons.saved_search_sharp,
-    Icons.warning_rounded,
   ];
 }

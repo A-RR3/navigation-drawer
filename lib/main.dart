@@ -29,24 +29,30 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final pages = [
     Center(
-      child: Text('Inbox'),
+      child: Text('My Files'),
     ),
     Center(
-      child: Text('Starred'),
+      child: Text('Shared with me'),
     ),
     Center(
-      child: Text('Sent'),
-    ),
-    Center(
-      child: Text('Drafts'),
+      child: Text('Recent'),
     ),
     Center(
       child: Text('Trash'),
     ),
     Center(
-      child: Text('Spam'),
-    )
+      child: Text('Family'),
+    ),
   ];
+
+  Function updateState(index) {
+    return () {
+      setState(() {
+        indexClicked = index;
+        Navigator.pop(context);
+      });
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,11 +96,25 @@ class _MainPageState extends State<MainPage> {
                       SizedBox(
                         height: 5,
                       ),
-                      Text('Sandra1979@gmail.com',
-                          style: GoogleFonts.sanchez(
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.grey)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Sandra1979@gmail.com',
+                              style: GoogleFonts.sanchez(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey)),
+                          Container(
+                            alignment: Alignment.centerRight,
+                            padding: EdgeInsets.fromLTRB(0, 0, 15, 0),
+                            child: Icon(
+                              Icons.arrow_drop_down_sharp,
+                              size: 30,
+                              color: Defaults.drawerItemColorIcon,
+                            ),
+                          )
+                        ],
+                      )
                     ],
                   ),
                 )),
@@ -102,41 +122,71 @@ class _MainPageState extends State<MainPage> {
               child: ListView(
                 padding: EdgeInsets.zero,
                 children: [
+                  AppDrawerTile(index: 0, onTap: updateState(0)),
+                  AppDrawerTile(index: 1, onTap: updateState(1)),
+                  AppDrawerTile(index: 2, onTap: updateState(2)),
+                  AppDrawerTile(index: 3, onTap: updateState(3)),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Divider(
+                    height: 1,
+                    thickness: .5,
+                    color: Defaults.drawerItemColorIcon,
+                  ),
                   ListTile(
-                      leading: Icon(
-                        Defaults.drawerItemIcon[0],
-                        size: 35,
-                        color: indexClicked == 0
-                            ? Defaults.drawerItemSelectedColor
-                            : Defaults.drawerItemColorIcon,
-                      ),
-                      title: Text(Defaults.drawerItemText[0]),
-                      onTap: () {
-                        setState(() {
-                          indexClicked = 0;
-                        });
-                        Navigator.pop(context);
-                      }),
-                  ListTile(
-                      leading: Icon(
-                        Defaults.drawerItemIcon[1],
-                        size: 35,
-                        color: indexClicked == 1
-                            ? Defaults.drawerItemSelectedColor
-                            : Defaults.drawerItemColorText,
-                      ),
-                      title: Text(Defaults.drawerItemText[1]),
-                      onTap: () {
-                        setState(() {
-                          indexClicked = 1;
-                        });
-                        Navigator.pop(context);
-                      })
+                    subtitle: Text(
+                      'Labels',
+                      style: TextStyle(
+                          fontSize: 20, color: Defaults.drawerItemColorIcon),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  AppDrawerTile(index: 4, onTap: updateState(4)),
                 ],
               ),
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class AppDrawerTile extends StatelessWidget {
+  const AppDrawerTile({Key key, @required this.index, @required this.onTap})
+      : super(key: key);
+  final int index;
+  final Function onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: ListTile(
+        leading: Icon(
+          Defaults.drawerItemIcon[index],
+          size: 27,
+          color: indexClicked == index
+              ? Defaults.drawerItemSelectedColor
+              : Defaults.drawerItemColorIcon,
+        ),
+        title: Text(
+          Defaults.drawerItemText[index],
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            color: indexClicked == index
+                ? Defaults.drawerItemSelectedColor
+                : Defaults.drawerItemColorText,
+          ),
+        ),
+        onTap: onTap,
+        selected: indexClicked == index,
+        selectedTileColor: Defaults.drawerSelectedTileColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
       ),
     );
   }
