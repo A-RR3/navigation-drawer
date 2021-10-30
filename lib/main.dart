@@ -7,7 +7,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key, key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
 var indexClicked = 0;
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+  const MainPage({Key, key}) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -108,7 +108,7 @@ class _MainPageState extends State<MainPage> {
                         size: 35,
                         color: indexClicked == 0
                             ? Defaults.drawerItemSelectedColor
-                            : Defaults.drawerItemColor,
+                            : Defaults.drawerItemColorIcon,
                       ),
                       title: Text(Defaults.drawerItemText[0]),
                       onTap: () {
@@ -123,7 +123,7 @@ class _MainPageState extends State<MainPage> {
                         size: 35,
                         color: indexClicked == 1
                             ? Defaults.drawerItemSelectedColor
-                            : Defaults.drawerItemColor,
+                            : Defaults.drawerItemColorText,
                       ),
                       title: Text(Defaults.drawerItemText[1]),
                       onTap: () {
