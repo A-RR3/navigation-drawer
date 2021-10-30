@@ -3,15 +3,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:navigation_drawer_homework3/dafaults/defaults.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  // const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: MainPage(),
     );
   }
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
 var indexClicked = 0;
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+  // const MainPage({Key? key}) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -29,24 +29,33 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final pages = [
     Center(
-      child: Text('Inbox'),
+      child: Text('My Files'),
     ),
     Center(
-      child: Text('Starred'),
+      child: Text('Shared with me'),
     ),
     Center(
-      child: Text('Sent'),
-    ),
-    Center(
-      child: Text('Drafts'),
+      child: Text('Recent'),
     ),
     Center(
       child: Text('Trash'),
     ),
     Center(
+      child: Text('Family'),
+    ),
+    Center(
       child: Text('Spam'),
     )
   ];
+
+  Function updateState(index) {
+    return () {
+      setState(() {
+        indexClicked = index;
+      });
+      Navigator.pop(context);
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,40 +111,71 @@ class _MainPageState extends State<MainPage> {
               child: ListView(
                 padding: EdgeInsets.zero,
                 children: [
+                  AppDrawerTitle(index: 0, Tap: updateState(0)),
+                  AppDrawerTitle(index: 1, Tap: updateState(1)),
+                  AppDrawerTitle(index: 2, Tap: updateState(2)),
+                  AppDrawerTitle(index: 3, Tap: updateState(3)),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                    color: Defaults.drawerItemColorIcon,
+                  ),
+                  SizedBox(
+                    height: 2,
+                  ),
                   ListTile(
-                      leading: Icon(
-                        Defaults.drawerItemIcon[0],
-                        size: 35,
-                        color: indexClicked == 0
-                            ? Defaults.drawerItemSelectedColor
-                            : Defaults.drawerItemColor,
+                    subtitle: Text(
+                      "Labels",
+                      style: TextStyle(
+                          color: Defaults.drawerItemColorIcon,
+                          fontSize: 19
                       ),
-                      title: Text(Defaults.drawerItemText[0]),
-                      onTap: () {
-                        setState(() {
-                          indexClicked = 0;
-                        });
-                        Navigator.pop(context);
-                      }),
-                  ListTile(
-                      leading: Icon(
-                        Defaults.drawerItemIcon[1],
-                        size: 35,
-                        color: indexClicked == 1
-                            ? Defaults.drawerItemSelectedColor
-                            : Defaults.drawerItemColor,
-                      ),
-                      title: Text(Defaults.drawerItemText[1]),
-                      onTap: () {
-                        setState(() {
-                          indexClicked = 1;
-                        });
-                        Navigator.pop(context);
-                      })
+                    ),
+                  ),
+                  AppDrawerTitle(index: 4, Tap: updateState(4)),
                 ],
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class AppDrawerTitle extends StatelessWidget {
+  const AppDrawerTitle({Key, key, @required this.index, @required this.Tap})
+      : super(key: key);
+  final int index;
+  final Function Tap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: ListTile(
+        selected: indexClicked == index,
+        selectedTileColor: Defaults.drawerSelectedTileColor,
+        onTap: Tap,
+        leading: Icon(
+          Defaults.drawerItemIcon[index],
+          size: 30,
+          color: indexClicked == index
+              ? Defaults.drawerItemSelectedColor
+              : Defaults.drawerItemColorIcon,
+        ),
+        title: Text(
+          Defaults.drawerItemText[index],
+          style: GoogleFonts.sanchez(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+            color: indexClicked == index
+                ? Defaults.drawerItemSelectedColor
+                : Defaults.drawerItemColorText,
+          ),
         ),
       ),
     );
