@@ -26,30 +26,33 @@ class MainPage extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
+final pages = [
+  Center(
+    child: Text('My Files'),
+  ),
+  Center(
+    child: Text('Shared with me'),
+  ),
+  Center(
+    child: Text('Recent'),
+  ),
+  Center(
+    child: Text('Trash'),
+  ),
+  Center(
+    child: Text('Family'),
+  ),
+];
+
 class _MainPageState extends State<MainPage> {
-  final pages = [
-    Center(
-      child: Text('My Files'),
-    ),
-    Center(
-      child: Text('Shared with me'),
-    ),
-    Center(
-      child: Text('Recent'),
-    ),
-    Center(
-      child: Text('Trash'),
-    ),
-    Center(
-      child: Text('Family'),
-    ),
-  ];
+
 
   Function updateState(index) {
     return () {
       setState(() {
         indexClicked = index;
         Navigator.pop(context);
+        // Navigator.push(context, route)
       });
     };
   }
@@ -187,6 +190,7 @@ class AppDrawerTile extends StatelessWidget {
         selected: indexClicked == index,
         selectedTileColor: Defaults.drawerSelectedTileColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
+
       ),
     );
   }
